@@ -20,7 +20,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	logger.InitLogger(cfg.LogLevel, cfg.IsJsonLog)
+	logger.Init(cfg.LogLevel, cfg.IsJsonLog)
 
 	log.Info().Msg("Starting")
 

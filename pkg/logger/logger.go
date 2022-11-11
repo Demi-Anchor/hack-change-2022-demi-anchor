@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func InitLogger(logLevel string, jsonLogging bool) {
+func Init(logLevel string, jsonLogging bool) {
 	if !jsonLogging {
 		log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 	}
