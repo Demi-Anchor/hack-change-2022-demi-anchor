@@ -1,5 +1,7 @@
 # hack-change-2022-demi-anchor
 
+https://radiant-wildwood-88953.herokuapp.com
+
 #### Локальный запуск
 
 1. Создать файл ".env" с необходимыми переменными окружения рядом с файлом "Makefile"
