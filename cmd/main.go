@@ -27,7 +27,7 @@ func main() {
 	log.Info().Msg("Starting")
 
 	// Заглушка для storage, в будущем поменяется на
-	// s, err := storage.New()
+	// s, err := storage.New(cfg.Storage)
 	// if err != nil {
 	//	 log.Fatal().Err(err).Send()
 	// }
