@@ -3,6 +3,8 @@ package main
 import (
 	"demi-anchor/internal/config"
 	"demi-anchor/internal/handler"
+	"demi-anchor/internal/plugs"
+	"demi-anchor/internal/service"
 	"demi-anchor/pkg/logger"
 	"fmt"
 	"net/http"
@@ -24,7 +26,12 @@ func main() {
 
 	log.Info().Msg("Starting")
 
-	h := handler.New()
+	// Заглушка для storage, в будущем поменяется на
+	// s := storage.New()
+	p := plugs.New()
+
+	s := service.New(p)
+	h := handler.New(s)
 
 	go func() {
 		err = http.ListenAndServe(":"+cfg.Port, h.InitRouter())
