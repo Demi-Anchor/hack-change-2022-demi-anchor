@@ -1,1 +1,1 @@
-web: bin/hack-change-2022-demi-anchor-backend
+web: bin/demi-anchor
