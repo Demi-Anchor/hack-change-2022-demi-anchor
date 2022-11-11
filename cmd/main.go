@@ -27,7 +27,7 @@ func main() {
 	h := handler.New()
 
 	go func() {
-		err = http.ListenAndServe(cfg.Host, h.InitRouter())
+		err = http.ListenAndServe(":"+cfg.Port, h.InitRouter())
 		if err != nil {
 			log.Fatal().Err(err).Send()
 		}
