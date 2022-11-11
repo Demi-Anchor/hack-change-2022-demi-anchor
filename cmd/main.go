@@ -39,14 +39,15 @@ func main() {
 	s := service.New(p)
 	h := handler.New(s)
 
-	go func() {
-		if err := http.ListenAndServe(":"+cfg.Port, h.InitRouter()); err != nil {
-			log.Fatal().Err(err).Send()
-		}
-	}()
-
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		if err := http.ListenAndServe(":"+cfg.Port, h.InitRouter()); err != nil {
+			log.Err(err).Send()
+			sigChan <- syscall.SIGTERM
+		}
+	}()
 
 	<-sigChan
 
