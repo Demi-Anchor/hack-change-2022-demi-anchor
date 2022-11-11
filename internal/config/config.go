@@ -11,7 +11,7 @@ type config struct {
 	IsJsonLog bool   `envconfig:"IS_JSON_LOG" required:"true"`
 	Port      string `envconfig:"PORT" required:"true"`
 
-	// Storage *storage.Config
+	// Repo *repo.Config
 }
 
 func Load() (*config, error) {

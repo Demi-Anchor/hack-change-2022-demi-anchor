@@ -1,4 +1,4 @@
-package storage
+package repo
 
 import (
 	"database/sql"
@@ -6,11 +6,11 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type storage struct {
+type repo struct {
 	*sql.DB
 }
 
-func New(cfg *Config) (*storage, error) {
+func New(cfg *Config) (*repo, error) {
 	db, err := sql.Open("postgres", cfg.Source)
 	if err != nil {
 		return nil, errtrace.AddTrace(err)
@@ -25,10 +25,10 @@ func New(cfg *Config) (*storage, error) {
 	db.SetConnMaxIdleTime(cfg.IdleTime)
 	db.SetConnMaxLifetime(cfg.Lifetime)
 
-	return &storage{db}, nil
+	return &repo{db}, nil
 }
 
-func (s *storage) Close() {
+func (s *repo) Close() {
 	if err := s.DB.Close(); err != nil {
 		log.Err(errtrace.AddTrace(err)).Send()
 	}
