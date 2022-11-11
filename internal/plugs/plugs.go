@@ -5,8 +5,8 @@ import "demi-anchor/internal/models"
 type plugs struct {
 }
 
-func New() *plugs {
-	return &plugs{}
+func New() (*plugs, error) {
+	return &plugs{}, nil
 }
 
 func (p *plugs) CreateUser(u models.User) error {

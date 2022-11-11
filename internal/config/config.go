@@ -10,6 +10,8 @@ type config struct {
 	LogLevel  string `envconfig:"LOG_LEVEL" required:"true"`
 	IsJsonLog bool   `envconfig:"IS_JSON_LOG" required:"true"`
 	Port      string `envconfig:"PORT" required:"true"`
+
+	// Storage *storage.Config
 }
 
 func Load() (*config, error) {

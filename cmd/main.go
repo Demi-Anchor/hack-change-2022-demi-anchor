@@ -27,15 +27,20 @@ func main() {
 	log.Info().Msg("Starting")
 
 	// Заглушка для storage, в будущем поменяется на
-	// s := storage.New()
-	p := plugs.New()
+	// s, err := storage.New()
+	// if err != nil {
+	//	 log.Fatal().Err(err).Send()
+	// }
+	p, err := plugs.New()
+	if err != nil {
+		log.Fatal().Err(err).Send()
+	}
 
 	s := service.New(p)
 	h := handler.New(s)
 
 	go func() {
-		err = http.ListenAndServe(":"+cfg.Port, h.InitRouter())
-		if err != nil {
+		if err := http.ListenAndServe(":"+cfg.Port, h.InitRouter()); err != nil {
 			log.Fatal().Err(err).Send()
 		}
 	}()
@@ -47,7 +52,7 @@ func main() {
 
 	log.Info().Msg("Shutdown...")
 
-	// Clean/close/kill ...
+	// s.Close()
 
 	log.Info().Msg("Goodbye!")
 }
