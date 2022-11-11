@@ -1,1 +1,1 @@
-web: bin/demi-anchor
+web: bin/cmd
