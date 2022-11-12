@@ -37,7 +37,3 @@ func (r *repository) AddPayment(p *Payment) error {
 	}
 	return nil
 }
-
-//func (r *repository) GetPaymentByPeriod(p model.Period) {
-//
-//}

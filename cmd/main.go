@@ -4,7 +4,6 @@ import (
 	"demi-anchor/internal/config"
 	"demi-anchor/internal/handler"
 	"demi-anchor/internal/plugs"
-	"demi-anchor/internal/repository"
 	"demi-anchor/internal/service"
 	"demi-anchor/pkg/logger"
 	"fmt"
@@ -28,16 +27,12 @@ func main() {
 	log.Info().Msg("Starting")
 
 	// Заглушка для repository, в будущем поменяется на
-	r, err := repository.New(cfg.Repository)
-	if err != nil {
-		log.Fatal().Err(err).Send()
-	}
+	// r, err := repository.New(cfg.Repository)
+	// if err != nil {
+	//	 log.Fatal().Err(err).Send()
+	// }
 	p, err := plugs.New()
 	if err != nil {
-		log.Fatal().Err(err).Send()
-	}
-
-	if err = r.AddPayment(&repository.Payment{Name: "Kate", Money: 7000}); err != nil {
 		log.Fatal().Err(err).Send()
 	}
 
