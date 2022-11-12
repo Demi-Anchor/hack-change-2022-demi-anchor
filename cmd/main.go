@@ -26,8 +26,8 @@ func main() {
 
 	log.Info().Msg("Starting")
 
-	// Заглушка для repo, в будущем поменяется на
-	// r, err := repo.New(cfg.Repo)
+	// Заглушка для repository, в будущем поменяется на
+	// r, err := repository.New(cfg.Repository)
 	// if err != nil {
 	//	 log.Fatal().Err(err).Send()
 	// }

@@ -4,16 +4,16 @@ import (
 	"demi-anchor/internal/models"
 )
 
-type Repo interface {
+type Repository interface {
 	CreateUser(u models.User) error
 }
 
 type service struct {
-	repo Repo
+	repository Repository
 }
 
-func New(r Repo) *service {
-	return &service{repo: r}
+func New(r Repository) *service {
+	return &service{repository: r}
 }
 
 func (s *service) ValidateUser(u models.User) (bool, string) {
@@ -27,5 +27,5 @@ func (s *service) ValidateUser(u models.User) (bool, string) {
 }
 
 func (s *service) CreateUser(u models.User) error {
-	return s.repo.CreateUser(u)
+	return s.repository.CreateUser(u)
 }

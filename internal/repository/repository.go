@@ -1,4 +1,4 @@
-package repo
+package repository
 
 import (
 	"database/sql"
@@ -6,11 +6,11 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type repo struct {
+type repository struct {
 	*sql.DB
 }
 
-func New(cfg *Config) (*repo, error) {
+func New(cfg *Config) (*repository, error) {
 	db, err := sql.Open("postgres", cfg.Source)
 	if err != nil {
 		return nil, errtrace.AddTrace(err)
@@ -25,11 +25,11 @@ func New(cfg *Config) (*repo, error) {
 	db.SetConnMaxIdleTime(cfg.IdleTime)
 	db.SetConnMaxLifetime(cfg.Lifetime)
 
-	return &repo{db}, nil
+	return &repository{db}, nil
 }
 
-func (s *repo) Close() {
-	if err := s.DB.Close(); err != nil {
+func (r *repository) Close() {
+	if err := r.DB.Close(); err != nil {
 		log.Err(errtrace.AddTrace(err)).Send()
 	}
 }
