@@ -13,6 +13,8 @@ import (
 type Service interface {
 	ValidateUser(u models.User) (bool, string)
 	CreateUser(u models.User) error
+	ValidateDonation(d Donations) (bool, string)
+	CreateDonations(d Donations) ([]byte, error)
 }
 
 type handler struct {
@@ -28,6 +30,7 @@ func (h *handler) InitRouter() *mux.Router {
 
 	r.HandleFunc("/readiness", h.healthCheck).Methods(http.MethodGet)
 	r.HandleFunc("/api/v1/user", h.createUser).Methods(http.MethodPost)
+	r.HandleFunc("/donations_info", h.donationsCheck).Methods(http.MethodPost)
 
 	return r
 }
@@ -57,5 +60,29 @@ func (h *handler) createUser(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
+	return
+}
+
+func (h *handler) donationsCheck(w http.ResponseWriter, r *http.Request) {
+	var d Donations
+	if err := json.NewDecoder(r.Body).Decode(&d); err != nil {
+		log.Err(errtrace.AddTrace(err)).Send()
+		sendErrResp(w, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	if ok, msg := h.service.ValidateDonation(d); !ok {
+		sendErrResp(w, http.StatusBadRequest, msg)
+		return
+	}
+
+	data, err := h.service.CreateDonations(d)
+	if err != nil {
+		log.Err(err).Send()
+		sendErrResp(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	w.Write(data)
 	return
 }
