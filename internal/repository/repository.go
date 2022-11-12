@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"demi-anchor/internal/models"
 	"demi-anchor/pkg/errtrace"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
@@ -31,9 +32,17 @@ func (r *repository) Close() {
 	}
 }
 
-func (r *repository) AddDonation(d *Donation) error {
-	if _, err := r.DB.Exec(addDonationSQL, d.Name, d.Money); err != nil {
+func (r *repository) AddDonation(d *models.Donation) error {
+	if _, err := r.DB.Exec(addDonationSQL, d.StreamerID, d.Author, d.Money, d.Comment, d.Time); err != nil {
 		return errtrace.AddTrace(err)
 	}
 	return nil
+}
+
+func (r *repository) GetDailyDonations(p *models.Period) ([]models.DailyDonation, error) {
+	var d []models.DailyDonation
+	if err := r.DB.Select(&d, getDailyDonationsSQL, p.FirstDate, p.LastDate); err != nil {
+		return nil, errtrace.AddTrace(err)
+	}
+	return d, nil
 }

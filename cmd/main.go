@@ -3,7 +3,7 @@ package main
 import (
 	"demi-anchor/internal/config"
 	"demi-anchor/internal/handler"
-	"demi-anchor/internal/plugs"
+	"demi-anchor/internal/repository"
 	"demi-anchor/internal/service"
 	"demi-anchor/pkg/logger"
 	"fmt"
@@ -26,17 +26,12 @@ func main() {
 
 	log.Info().Msg("Starting")
 
-	// Заглушка для repository, в будущем поменяется на
-	// r, err := repository.New(cfg.Repository)
-	// if err != nil {
-	//	 log.Fatal().Err(err).Send()
-	// }
-	p, err := plugs.New()
+	r, err := repository.New(cfg.Repository)
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
 
-	s := service.New(p)
+	s := service.New(r)
 	h := handler.New(s)
 
 	sigChan := make(chan os.Signal, 1)
@@ -53,7 +48,7 @@ func main() {
 
 	log.Info().Msg("Shutdown...")
 
-	// r.Close()
+	r.Close()
 
 	log.Info().Msg("Goodbye!")
 }
