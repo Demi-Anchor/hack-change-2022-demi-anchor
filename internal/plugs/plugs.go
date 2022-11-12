@@ -2,7 +2,6 @@ package plugs
 
 import (
 	"demi-anchor/internal/handler"
-	"demi-anchor/internal/models"
 	"encoding/json"
 	"time"
 )
@@ -14,7 +13,7 @@ func New() (*plugs, error) {
 	return &plugs{}, nil
 }
 
-func (p *plugs) CreateUser(u models.User) error {
+func (p *plugs) CreateUser(u handler.User) error {
 	return nil
 }
 

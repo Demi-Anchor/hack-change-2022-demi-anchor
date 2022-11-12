@@ -2,11 +2,10 @@ package service
 
 import (
 	"demi-anchor/internal/handler"
-	"demi-anchor/internal/models"
 )
 
 type Repository interface {
-	CreateUser(u models.User) error
+	CreateUser(u handler.User) error
 	CreateDonations(d handler.Donations) ([]byte, error)
 }
 
@@ -36,7 +35,7 @@ func New(r Repository) *service {
 	return &service{repository: r}
 }
 
-func (s *service) ValidateUser(u models.User) (bool, string) {
+func (s *service) ValidateUser(u handler.User) (bool, string) {
 	if u.Name == "" {
 		return false, "name is empty"
 	}
@@ -46,6 +45,6 @@ func (s *service) ValidateUser(u models.User) (bool, string) {
 	return true, ""
 }
 
-func (s *service) CreateUser(u models.User) error {
+func (s *service) CreateUser(u handler.User) error {
 	return s.repository.CreateUser(u)
 }

@@ -1,5 +1,5 @@
 package repository
 
 const (
-	addPaymentSQL = `select * from payments.add_payment($1::text, $2::bigint)`
+	addDonationSQL = `select * from payments.add_donation($1::text, $2::bigint)`
 )

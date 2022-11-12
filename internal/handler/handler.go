@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"demi-anchor/internal/models"
 	"demi-anchor/pkg/errtrace"
 	"encoding/json"
 	"github.com/rs/zerolog/log"
@@ -11,8 +10,8 @@ import (
 )
 
 type Service interface {
-	ValidateUser(u models.User) (bool, string)
-	CreateUser(u models.User) error
+	ValidateUser(u User) (bool, string)
+	CreateUser(u User) error
 	ValidateDonation(d Donations) (bool, string)
 	CreateDonations(d Donations) ([]byte, error)
 }
@@ -41,7 +40,7 @@ func (*handler) healthCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) createUser(w http.ResponseWriter, r *http.Request) {
-	var u models.User
+	var u User
 	if err := json.NewDecoder(r.Body).Decode(&u); err != nil {
 		log.Err(errtrace.AddTrace(err)).Send()
 		sendErrResp(w, http.StatusBadRequest, err.Error())

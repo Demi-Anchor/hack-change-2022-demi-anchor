@@ -1,7 +1,6 @@
 package config
 
 import (
-	"demi-anchor/internal/repository"
 	"demi-anchor/pkg/errtrace"
 
 	"github.com/kelseyhightower/envconfig"
@@ -12,7 +11,7 @@ type config struct {
 	IsJsonLog bool   `envconfig:"IS_JSON_LOG" required:"true"`
 	Port      string `envconfig:"PORT" required:"true"`
 
-	Repository *repository.Config
+	// Repository *repository.Config
 }
 
 func Load() (*config, error) {

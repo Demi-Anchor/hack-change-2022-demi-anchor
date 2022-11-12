@@ -31,8 +31,8 @@ func (r *repository) Close() {
 	}
 }
 
-func (r *repository) AddPayment(p *Payment) error {
-	if _, err := r.DB.Exec(addPaymentSQL, p.Name, p.Money); err != nil {
+func (r *repository) AddDonation(d *Donation) error {
+	if _, err := r.DB.Exec(addDonationSQL, d.Name, d.Money); err != nil {
 		return errtrace.AddTrace(err)
 	}
 	return nil

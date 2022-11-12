@@ -2,6 +2,11 @@ package handler
 
 import "time"
 
+type User struct {
+	Name     string `json:"name"`
+	Password string `json:"password"`
+}
+
 type Donations struct {
 	Name            string    `json:"name"`
 	FromDate        time.Time `json:"from_date"`
