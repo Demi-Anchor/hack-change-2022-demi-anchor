@@ -1,15 +1,35 @@
 package service
 
 import (
+	"demi-anchor/internal/handler"
 	"demi-anchor/internal/models"
 )
 
 type Repository interface {
 	CreateUser(u models.User) error
+	CreateDonations(d handler.Donations) ([]byte, error)
 }
 
 type service struct {
 	repository Repository
+}
+
+func (s *service) CreateDonations(d handler.Donations) ([]byte, error) {
+	return s.repository.CreateDonations(d)
+}
+
+func (s *service) ValidateDonation(d handler.Donations) (bool, string) {
+	if d.Name == "" {
+		return false, "name is empty"
+	}
+	if d.FromDate.After(d.ToDate) {
+		return false, "from date is older than to"
+	}
+	if d.MoneyAmount < 0 || d.DonationsAmount < 0 {
+		return false, "amount is less than zero"
+	}
+
+	return true, ""
 }
 
 func New(r Repository) *service {
