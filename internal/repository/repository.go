@@ -1,22 +1,19 @@
 package repository
 
 import (
-	"database/sql"
 	"demi-anchor/pkg/errtrace"
+	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 	"github.com/rs/zerolog/log"
 )
 
 type repository struct {
-	*sql.DB
+	*sqlx.DB
 }
 
 func New(cfg *Config) (*repository, error) {
-	db, err := sql.Open("postgres", cfg.Source)
+	db, err := sqlx.Connect("postgres", cfg.Source)
 	if err != nil {
-		return nil, errtrace.AddTrace(err)
-	}
-
-	if err = db.Ping(); err != nil {
 		return nil, errtrace.AddTrace(err)
 	}
 
@@ -33,3 +30,14 @@ func (r *repository) Close() {
 		log.Err(errtrace.AddTrace(err)).Send()
 	}
 }
+
+func (r *repository) AddPayment(p *Payment) error {
+	if _, err := r.DB.Exec(addPaymentSQL, p.Name, p.Money); err != nil {
+		return errtrace.AddTrace(err)
+	}
+	return nil
+}
+
+//func (r *repository) GetPaymentByPeriod(p model.Period) {
+//
+//}
