@@ -17,3 +17,53 @@ https://radiant-wildwood-88953.herokuapp.com
    ```
 
 2.  Выполнить make run в консоли
+
+#### API
+
+*Добавление доната*
+
+POST https://radiant-wildwood-88953.herokuapp.com/api/v1/donations
+
+   ```
+   Request
+   
+   {
+     "streamer_id": 222,
+     "author": "Dog",
+     "money": 7000,
+     "comment": "For cat",
+     "time": "2022-11-05T09:52:36Z"
+   }
+   ```
+
+*Получение суммы и количества донатов по дням за определенный период*
+
+POST https://radiant-wildwood-88953.herokuapp.com/api/v1/donations/daily
+
+   ```
+   Request
+   
+   {
+     "streamer_id": 222,
+     "author": "Dog",
+     "money": 7000,
+     "comment": "For cat",
+     "time": "2022-11-05T09:52:36Z"
+   }
+   
+   Response
+   
+   [
+       {
+           "sum": 30656000,
+           "count": 9,
+           "date": "2022-11-04T00:00:00Z"
+       },
+       {
+           "sum": 7000,
+           "count": 1,
+           "date": "2022-11-05T00:00:00Z"
+       }
+   ]
+   
+   ```
