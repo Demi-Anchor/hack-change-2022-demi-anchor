@@ -32,7 +32,6 @@ func (h *handler) InitRouter() *mux.Router {
 	r.HandleFunc("/readiness", h.healthCheck).Methods(http.MethodGet)
 	r.HandleFunc("/api/v1/donations", h.addDonation).Methods(http.MethodPost)
 	r.HandleFunc("/api/v1/donations/daily", h.getDailyDonations).Methods(http.MethodPost)
-	r.HandleFunc("/api/v1/donations/payment", h.getDailyDonations).Methods(http.MethodPost)
 
 	return r
 }
