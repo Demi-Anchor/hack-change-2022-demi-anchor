@@ -21,7 +21,7 @@ func (s *service) ValidateDonation(d *models.Donation) (bool, string) {
 
 func (s *service) ValidatePeriod(d *models.Period) (bool, string) {
 	if d.FirstDate.After(d.LastDate) {
-		return false, "Wrong period. Last date > first date"
+		return false, "Wrong period. Last date < first date"
 	}
 	return true, ""
 }
