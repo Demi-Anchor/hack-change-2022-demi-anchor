@@ -16,7 +16,7 @@ type Period struct {
 }
 
 type DailyDonation struct {
-	Sum   int64  `json:"sum" db:"sum"`
-	Count int    `json:"count" db:"count"`
-	Date  string `json:"date" db:"date"`
+	Sum   int64     `json:"sum" db:"sum"`
+	Count int       `json:"count" db:"count"`
+	Date  time.Time `json:"date" db:"date"`
 }

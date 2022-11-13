@@ -32,6 +32,7 @@ func (h *handler) InitRouter() *mux.Router {
 	r.HandleFunc("/readiness", h.healthCheck).Methods(http.MethodGet)
 	r.HandleFunc("/api/v1/donations", h.addDonation).Methods(http.MethodPost)
 	r.HandleFunc("/api/v1/donations/daily", h.getDailyDonations).Methods(http.MethodPost)
+	r.HandleFunc("/api/v1/donations/payment", h.getDailyDonations).Methods(http.MethodPost)
 
 	return r
 }
@@ -87,6 +88,7 @@ func (h *handler) getDailyDonations(w http.ResponseWriter, r *http.Request) {
 }
 
 func sendResp(w http.ResponseWriter, statusCode int, dataStruct any) {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 	if err := json.NewEncoder(w).Encode(&dataStruct); err != nil {
 		log.Err(errtrace.AddTrace(err)).Send()
@@ -94,6 +96,7 @@ func sendResp(w http.ResponseWriter, statusCode int, dataStruct any) {
 }
 
 func sendMsgResp(w http.ResponseWriter, statusCode int, msg string) {
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
 
 	msgResp := &struct {
